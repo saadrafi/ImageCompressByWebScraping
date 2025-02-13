@@ -99,6 +99,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 }
 
+
 # Function to convert base64 string to an image
 def base64_to_image(base64_string):
     image_data = base64.b64decode(base64_string)
@@ -142,6 +143,8 @@ def save_compressed_image(image, image_name, folder, type="webp", quality=70):
     image.save(f"{folder}/{image_name}.{type}", type, quality=quality)
     return f"{folder}/{image_name}.{type}"
 
+
+
 # Function to compare the sizes of the original and compressed images
 def compare_images(original_image_path, compressed_image_path):
     original_size = os.path.getsize(original_image_path)
@@ -154,8 +157,11 @@ def compare_images(original_image_path, compressed_image_path):
 def download_and_save_images(title, images):
     count = 0
     for image in images:
-        # Create subfolders for storing original and compressed images
+        # Create subfolder for compressed images
         compressed_images = create_sub_folder(compressed_folder, title)
+        # make a txt file to store the alt text
+        alt_text_file = open(f"{compressed_images}/alt_text.txt", "a")
+        # Create a subfolder for storing original images
         original_images = create_sub_folder(original_folder, title)
 
         # Check if the image source is a base64 encoded image
@@ -165,6 +171,11 @@ def download_and_save_images(title, images):
             image_link = image["src"]
             image_name = "image_" + str(count)
             image_data = image_link.split(",")[1]
+
+            alt_text = image.get("alt", f"{title}_image_{count}")
+            alt_text_file.write(f"{image_name}: {alt_text}\n")
+            print(f"Alt text: {alt_text}")
+
             
             # Decode the base64 image
             image = base64_to_image(image_data)

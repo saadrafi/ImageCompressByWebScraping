@@ -11,7 +11,7 @@ original_folder = "original_images"
 os.makedirs(compressed_folder, exist_ok=True)
 os.makedirs(original_folder, exist_ok=True)
 
-# URL of the page to fetch images from
+# URL of the pages to fetch images from
 links = [
     "https://www.clevercreator.ai/resources/blog/ai-content-creator/how-to-use-the-ai-blog-section-creator",
     "https://www.clevercreator.ai/resources/blog/ai-content-creator/how-to-use-the-ai-blog-ideas-generator",

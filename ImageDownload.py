@@ -156,13 +156,17 @@ def compare_images(original_image_path, compressed_image_path):
 # Function to download and save images from a list of image sources
 def download_and_save_images(title, images):
     count = 0
-    for image in images:
-        # Create subfolder for compressed images
-        compressed_images = create_sub_folder(compressed_folder, title)
-        # make a txt file to store the alt text
+    # Create subfolder for compressed images
+    compressed_images = create_sub_folder(compressed_folder, title)
+    # make a txt file to store the alt text
+    alt_text_file = None
+    if os.path.exists(f"{compressed_images}/alt_text.txt"):
+        alt_text_file = open(f"{compressed_images}/alt_text.txt", "w")
+    else:
         alt_text_file = open(f"{compressed_images}/alt_text.txt", "a")
-        # Create a subfolder for storing original images
-        original_images = create_sub_folder(original_folder, title)
+    # Create a subfolder for storing original images
+    original_images = create_sub_folder(original_folder, title)
+    for image in images:
 
         # Check if the image source is a base64 encoded image
         if "data:image" in image["src"]:
